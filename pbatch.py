@@ -5,23 +5,23 @@ import numpy as np
 partition_list=['lr3_16', 'lr3_20', 'lr3', 
 		'lr4', 
 		'lr5_20', 'lr5_28', 'lr5', 
-		'lr6_32', 'lr6_40', 'lr6']
+		'lr6_32', 'lr6_40', 'lr6','cm1']
 node_list = [	'n0[000-163],n0[309-336]',  'n0[164-203],n0[213-308]', 'ALL' ,
 	     	'ALL',
 		'n0[148-191]','n0[000-143]','ALL',
-		'n0[000-087],n0[088-115]','n0[144-271]','ALL']
+		'n0[000-087],n0[088-115]','n0[144-271]','ALL','ALL']
 cpu_list = [	16,20,16,
 		24,
 		20,28,20,
-		32,40,32 ]
+		32,40,32,48 ]
 mem_list = [	64000,64000,64000,
 		64000,
 		128000,64000,64000,
-		96000,128000,96000]
+		96000,128000,96000,256000]
 partition_list_plain=['lr3', 'lr3', 'lr3', 
 		'lr4', 
 		'lr5', 'lr5', 'lr5', 
-		'lr6', 'lr6', 'lr6']
+		'lr6', 'lr6', 'lr6','cm1']
 
 job_name = []
 ntasks_per_node = []
@@ -220,9 +220,9 @@ for i in range(cur_node+1):
 	f.write('#SBATCH --mem='+str(mem_list[part])+'m\n')
 	f.write('#SBATCH --account='+account[0]+'\n')
 	f.write('#SBATCH --partition='+partition_list_plain[part]+'\n')
-	#if node_list[part] != 'ALL':
+	if node_list[part] != 'ALL':
 	#	f.write('#SBATCH --exclude='+master_folder+'/node_config/'+partition_list[part]+'\n')
-	#	f.write('#SBATCH --cores-per-socket='+str(cpu_list[part])+'\n')
+		f.write('#SBATCH --cores-per-socket='+str(cpu_list[part])+'\n')
 	f.write('#SBATCH --qos='+qos[0]+'\n')
 	f.write('#SBATCH --mail-type='+mail_type[0]+'\n\n')
 
